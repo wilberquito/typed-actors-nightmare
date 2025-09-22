@@ -1,3 +1,3 @@
 # Prime Numbers Counter Complex
 
-![](../../../../../../assets/primes/PrimeCounterComplex.png)
+![](../../../../../../assets/primes/PrimeCounterComplex.drawio.png)
