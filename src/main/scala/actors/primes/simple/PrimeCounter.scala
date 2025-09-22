@@ -1,3 +1,4 @@
+package edu.udg.pda
 package primes.simple
 
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}

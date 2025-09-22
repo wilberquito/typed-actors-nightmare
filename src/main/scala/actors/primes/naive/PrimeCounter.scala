@@ -1,3 +1,4 @@
+package edu.udg.pda
 package primes.naive
 
 import scala.language.postfixOps
