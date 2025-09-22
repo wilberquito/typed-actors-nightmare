@@ -116,7 +116,7 @@ class Master(val nCounters: Int) extends Actor with ActorLogging {
 
 object Main extends App  {
 
-  val system: ActorSystem = ActorSystem("test-system")
+  val system: ActorSystem = ActorSystem("prime-system")
   val master: ActorRef = system.actorOf(Props(new Master(10)), "master")
 
   implicit val timeout: Timeout = Timeout(30.seconds)
