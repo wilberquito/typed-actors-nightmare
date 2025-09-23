@@ -3,7 +3,6 @@ package primes.complex
 
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 import akka.pattern.ask
-import akka.util.Timeout
 
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.*
@@ -16,11 +15,17 @@ import scala.language.postfixOps
 trait ActorMessage
 
 case class Count(group: Seq[Int]) extends ActorMessage
+
 case class Agg(n: Int) extends ActorMessage
+
 case class Done() extends ActorMessage
+
 case class Start() extends ActorMessage
+
 case class Query() extends ActorMessage
+
 case class Answer(n: Int) extends ActorMessage
+
 case class AnswerRange(a: Int, b: Int, n: Int) extends ActorMessage
 
 
@@ -114,18 +119,24 @@ class Master(val nCounters: Int) extends Actor with ActorLogging {
 
 }
 
-object Main extends App  {
+object Main {
+  def main(args: Array[String]): Unit = {
 
-  val system: ActorSystem = ActorSystem("prime-system")
-  val master: ActorRef = system.actorOf(Props(new Master(10)), "master")
+    val system: ActorSystem = ActorSystem("prime-system")
+    val master: ActorRef = system.actorOf(Props(new Master(10)), "master")
 
-  implicit val timeout: Timeout = Timeout(30.seconds)
+    implicit val timeout: Timeout = Timeout(30.seconds)
 
-  // Use ? to get a Future
-  val future: Future[Any] = master ? Start()
-  val result: AnswerRange = Await.result(future, timeout.duration).asInstanceOf[AnswerRange]
 
-  println(s"Main got reply: $result")
+    val t0: Long = System.nanoTime
 
-  system.terminate()
+    // Use ? to get a Future
+    val future: Future[Any] = master ? Start()
+    val result: AnswerRange = Await.result(future, timeout.duration).asInstanceOf[AnswerRange]
+
+    println(s"Main got reply: $result")
+    println(s"It took ${ (System.nanoTime - t0) / 1e9d + " seconds" }")
+
+    system.terminate()
+  }
 }
